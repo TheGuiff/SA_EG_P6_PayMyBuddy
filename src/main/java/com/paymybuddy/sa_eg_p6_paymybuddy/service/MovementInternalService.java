@@ -4,9 +4,11 @@ import com.paymybuddy.sa_eg_p6_paymybuddy.dal.entity.Movement;
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.entity.User;
 import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.MovementDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+@Service
 public class MovementInternalService {
 
     @Autowired
