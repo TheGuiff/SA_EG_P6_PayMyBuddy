@@ -11,4 +11,10 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/board")
+    public String board() { return "board"; }
+
+    @GetMapping("/createUser")
+    public String createUser() {return "createUser"; }
+
 }
