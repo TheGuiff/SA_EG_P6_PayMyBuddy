@@ -1,7 +1,11 @@
 package com.paymybuddy.sa_eg_p6_paymybuddy.dal.repository;
 
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.entity.Log;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.DatatypeConverter;
@@ -16,15 +20,8 @@ public interface LogRepository extends JpaRepository<Log, Long> {
     List<Log> findByEmail (String email);
 
     default String hashPassword(String password) {
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            messageDigest.update(password.getBytes(StandardCharsets.UTF_8));
-            byte[] digest = messageDigest.digest();
-            return DatatypeConverter.printHexBinary(digest).toUpperCase();
-        } catch (NoSuchAlgorithmException e){
-            return null;
-        }
-
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
     }
 
     default Log hashPasswordAndSave(Log log) {
