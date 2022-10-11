@@ -85,31 +85,6 @@ public class LogServiceTest {
     }
 
     @Test
-    public void logInTestOk() {
-        logDto.setEmail(email1);
-        logDto.setMdp(mdp1);
-        Log logOut = logService.logAndGetUser(logDto);
-        assertEquals(email1, logOut.getEmail());
-        assertEquals(logRepository.hashPassword(mdp1), logOut.getMdp());
-        assertEquals(firstName1, logOut.getUser().getFirstName());
-        assertEquals(lastName1, logOut.getUser().getLastName());
-    }
-
-    @Test
-    public void logInKoUnknownUser() {
-        logDto.setEmail(emailKo);
-        logDto.setMdp(mdp1);
-        Assertions.assertThrows(NoSuchElementException.class,() -> logService.logAndGetUser(logDto));
-    }
-
-    @Test
-    public void logInKoWrongPassword() {
-        logDto.setEmail(email1);
-        logDto.setMdp(mdpKo);
-        Assertions.assertThrows(NoSuchElementException.class,() -> logService.logAndGetUser(logDto));
-    }
-
-    @Test
     public void newUserOk() {
         newUserDto.setEmail(email2);
         newUserDto.setLastName(lastname2);
@@ -117,7 +92,6 @@ public class LogServiceTest {
         newUserDto.setMdp(mdp2);
         Log logOut = logService.newUserAndLog(newUserDto);
         assertEquals(email2, logOut.getEmail());
-        assertEquals(logRepository.hashPassword(mdp2), logOut.getMdp());
         assertEquals(firstname2, logOut.getUser().getFirstName());
         assertEquals(lastname2, logOut.getUser().getLastName());
     }

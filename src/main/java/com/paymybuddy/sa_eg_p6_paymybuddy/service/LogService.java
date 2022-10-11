@@ -24,17 +24,6 @@ public class LogService {
     @Autowired
     private UserRepository userRepository;
 
-    @Transactional
-    public Log logAndGetUser (LogDto logDto) {
-        //Se connecter pour un user existant - sinon exception
-        List<Log> logConnections = logRepository.findByEmail(logDto.getEmail());
-        if (logConnections.size() == 1 && Objects.equals(logRepository.hashPassword(logDto.getMdp()), logConnections.get(0).getMdp())) {
-            return logConnections.get(0);
-        } else {
-            throw new NoSuchElementException("email or password unknown");
-        }
-    }
-
     public Log newUserAndLog (NewUserDto newUserDto) {
         // Nouvel utilisateur - vérifie qu'il n'existe pas déjà et qu'un mdp est renseigné
         List<Log> logConnections = logRepository.findByEmail(newUserDto.getEmail());
