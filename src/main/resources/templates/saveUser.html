@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create user</title>
+</head>
+<body>
+<h1>Create user</h1>
+
+<form method="post" th:action="@{/saveUser}" th:object="${newUserDto}">
+    <div>
+        <label for="firstnameInput">Prénom : </label>
+        <input type="text" th:field="*{firstName}" id="firstnameInput">
+    </div>
+    <div>
+        <label for="lastnameInput">Nom de famille : </label>
+        <input type="text" th:field="*{lastName}" id="lastnameInput">
+    </div>
+    <div>
+        <label for="emailInput">Adresse mail : </label>
+        <input type="text" th:field="*{email}" id="emailInput">
+    </div>
+    <div>
+        <label for="mdpInput">Mot de passe : </label>
+        <input type="text" th:field="*{mdp}" id="mdpInput">
+    </div>
+    <button type="submit">Créer</button>
+</form>
+
+</body>
+</html>
