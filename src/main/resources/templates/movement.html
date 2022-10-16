@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Mouvement</h1>
+
+<p>Solde : <span th:text="${log.user.balance}"></span></p>
+
+<form method="post" th:action="@{/newMovement}" th:object="${movementDto}">
+    <div>
+        <label for="amountInput">Montant : </label>
+        <input type="number" th:field="*{amount}" id="amountInput">
+    </div>
+    <div>
+        <input type="radio" th:field="*{type}" id="debit" value="DEBIT">
+        <label for="debit">DEBIT</label><br>
+        <input type="radio" th:field="*{type}" id="credit" value="CREDIT">
+        <label for="credit">CREDIT</label><br>
+    </div>
+    <button type="submit">Créer</button>
+</form>
+
+</body>
+</html>
