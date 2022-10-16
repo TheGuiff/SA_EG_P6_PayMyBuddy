@@ -38,11 +38,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authProvider());
-//        auth.inMemoryAuthentication()
-//                .withUser("user").password(passwordEncoder().encode("user")).roles("USER")
-//                .and()
-//                .withUser("admin").password(passwordEncoder().encode("admin")).roles("USER", "ADMIN");
-
     }
 
     @Override
@@ -50,6 +45,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/createUser").permitAll()
+                .antMatchers("/saveUser").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(form -> form
