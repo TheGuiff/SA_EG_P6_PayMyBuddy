@@ -8,5 +8,24 @@
 <h1>Tableau de bord <span th:text="${log.user.firstName}"></span>
     <span th:text="${log.user.lastName}"></span></h1>
 
+<p>Solde : <span th:text="${log.user.balance}"></span></p>
+
+<h2>Envoyer de l'argent : </h2>
+<form method="post" th:action="@{/newTransaction}" th:object="${transactionWebDto}">
+    <div>
+        <label for="descriptionInput">Description : </label>
+        <input type="text" th:field="*{description}" id="descriptionInput">
+    </div>
+    <div>
+        <label for="amountInput">Montant : </label>
+        <input type="number" th:field="*{amount}" id="amountInput">
+    </div>
+    <div>
+        <label for="connectionInput">Adresse mail du destinataire : </label>
+        <input type="text" th:field="*{mailTo}" id="connectionInput">
+    </div>
+    <button type="submit">Créer</button>
+</form>
+
 </body>
 </html>

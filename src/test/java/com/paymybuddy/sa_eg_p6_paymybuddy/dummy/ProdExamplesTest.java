@@ -28,15 +28,13 @@ public class ProdExamplesTest {
     MovementRepository movementRepository;
 
 
-    private static final String email1 = "usertest@test.com";
-    private static final String mdp1 = "1234";
+    private static final String email1 = "user1@test.com";
+    private static final String mdp = "1234";
     private static final String firstName1 = "Alain";
-    private static final String email2 = "usertestbis@test.com";
-    private static final String mdp2 = "5678";
+    private static final String email2 = "user2@test.com";
     private static final String firstName2 = "Alex";
     private static final String lastName = "Térieur";
     private static final Double balance = 100.0;
-    private static final Double amountMovement = 10.0;
 
     @BeforeAll
     public void initDataBase(){
@@ -49,7 +47,7 @@ public class ProdExamplesTest {
         //User 1 - log et user
         Log log1 = new Log();
         log1.setEmail(email1);
-        log1.setMdp(mdp1);
+        log1.setMdp(mdp);
         User user1 = new User();
         user1.setFirstName(firstName1);
         user1.setLastName(lastName);
@@ -61,7 +59,7 @@ public class ProdExamplesTest {
         //User 2 - log et user
         Log log2 = new Log();
         log2.setEmail(email2);
-        log2.setMdp(mdp2);
+        log2.setMdp(mdp);
         User user2 = new User();
         user2.setFirstName(firstName2);
         user2.setLastName(lastName);
@@ -69,6 +67,12 @@ public class ProdExamplesTest {
         user2 = userRepository.save(user2);
         log2.setUser(user2);
         logRepository.hashPasswordAndSave(log2);
+
+        //user2 est une connection de user1
+        user1.getConnections().add(user2);
+        user2.getConnections().add(user1);
+        user1 = userRepository.save(user1);
+        user2 = userRepository.save(user2);
 
     }
 
