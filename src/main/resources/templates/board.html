@@ -10,6 +10,8 @@
 
 <p>Solde : <span th:text="${log.user.balance}"></span></p>
 
+<a th:href="@{/movement}">Alimenter le compte ou retirer de l'argent</a>
+
 <h2>Envoyer de l'argent : </h2>
 <form method="post" th:action="@{/newTransaction}" th:object="${transactionWebDto}">
     <div>
