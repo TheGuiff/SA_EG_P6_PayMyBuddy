@@ -6,6 +6,7 @@ import com.paymybuddy.sa_eg_p6_paymybuddy.dal.repository.MovementRepository;
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.repository.TransactionRepository;
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.repository.UserRepository;
 import com.paymybuddy.sa_eg_p6_paymybuddy.service.UserService;
+import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.ConnectionDto;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -103,13 +104,19 @@ public class UserServiceTest {
 
     @Test
     public void addConnectionTestOk () {
-        user1 = userService.addConnection(user1, email2);
+        ConnectionDto connectionDto = new ConnectionDto();
+        connectionDto.setEmailConnection(email2);
+        connectionDto.setUser(user1);
+        user1 = userService.addConnection(connectionDto);
         assertEquals(1, user1.getConnections().size());
     }
 
     @Test
     public void addConnectionTestKo () {
-        Assertions.assertThrows(NoSuchElementException.class,() -> userService.addConnection(user1, emailKo));
+        ConnectionDto connectionDto = new ConnectionDto();
+        connectionDto.setEmailConnection(emailKo);
+        connectionDto.setUser(user1);
+        Assertions.assertThrows(NoSuchElementException.class,() -> userService.addConnection(connectionDto));
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.paymybuddy.sa_eg_p6_paymybuddy.service;
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.entity.*;
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.repository.LogRepository;
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.repository.UserRepository;
+import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.ConnectionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +21,11 @@ public class UserService {
     private LogRepository logRepository;
 
     @Transactional
-    public User addConnection (User user, String email) {
-        List<Log> logConnection = logRepository.findByEmail(email);
+    public User addConnection (ConnectionDto connectionDto) {
+        List<Log> logConnection = logRepository.findByEmail(connectionDto.getEmailConnection());
         if (logConnection.size() == 1) {
-            user.getConnections().add(logConnection.get(0).getUser());
-            return userRepository.save(user);
+            connectionDto.getUser().getConnections().add(logConnection.get(0).getUser());
+            return userRepository.save(connectionDto.getUser());
         } else {
             throw new NoSuchElementException("unknown email address");
         }
