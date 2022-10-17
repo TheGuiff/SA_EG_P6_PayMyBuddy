@@ -14,6 +14,28 @@
 
 <a th:href="@{/connection}">Nouvelle connexion</a>
 
+<h2>Transactions déjà effectuées</h2>
+<form action="#" th:object="${log.user}">
+    <fieldset>
+        <table>
+            <thead>
+                <tr>
+                    <th>Connection</th>
+                    <th>Description</th>
+                    <th>Montant</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="transaction, itemStat : *{transactions}">
+                    <td><input th:field="*{transactions[__${itemStat.index}__].userTo.firstName}" /></td>
+                    <td><input th:field="*{transactions[__${itemStat.index}__].description}" /></td>
+                    <td><input th:field="*{transactions[__${itemStat.index}__].amount}" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</form>
+
 <h2>Envoyer de l'argent : </h2>
 <form method="post" th:action="@{/newTransaction}" th:object="${transactionWebDto}">
     <div>
