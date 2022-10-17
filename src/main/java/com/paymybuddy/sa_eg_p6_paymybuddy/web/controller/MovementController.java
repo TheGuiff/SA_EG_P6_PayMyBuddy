@@ -36,7 +36,6 @@ public class MovementController {
         model.addAttribute("log",log);
         //Nouveau mouvement
         MovementDto movementDto = new MovementDto();
-        model.addAttribute("type", TypeMovement.CREDIT);
         model.addAttribute("movementDto", movementDto);
         return "movement";
     }
