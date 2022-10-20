@@ -7,6 +7,7 @@ import com.paymybuddy.sa_eg_p6_paymybuddy.service.TransactionService;
 import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.NewUserDto;
 import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.TransactionDto;
 import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.TransactionWebDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @Controller
+@Slf4j
 public class TransactionController {
 
     @Autowired
@@ -29,13 +31,18 @@ public class TransactionController {
     public ModelAndView saveUser(HttpServletRequest request,
                                  @ModelAttribute TransactionWebDto transactionWebDto) throws Exception {
         Principal principal = request.getUserPrincipal();
-        Log log = logRepository.findByEmail(principal.getName()).get(0);
+        Log myLog = logRepository.findByEmail(principal.getName()).get(0);
+        log.info("New transaction from " + myLog.getEmail() + " to : " + transactionWebDto.getMailTo());
         TransactionDto transactionDto = new TransactionDto();
         transactionDto.setDescription(transactionWebDto.getDescription());
         transactionDto.setAmount(transactionWebDto.getAmount());
-        transactionDto.setUserFrom(log.getUser());
+        transactionDto.setUserFrom(myLog.getUser());
         transactionDto.setUserTo(logRepository.findByEmail(transactionWebDto.getMailTo()).get(0).getUser());
-        transactionInternalService.newTransactionInternalService(transactionDto);
+        try {
+            transactionInternalService.newTransactionInternalService(transactionDto);
+        } catch (Exception e) {
+            log.error("Error : {}",e.getMessage());
+        }
         return new ModelAndView("redirect:/board");
     }
 }
