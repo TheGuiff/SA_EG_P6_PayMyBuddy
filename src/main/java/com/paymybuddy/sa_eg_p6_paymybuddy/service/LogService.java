@@ -24,7 +24,7 @@ public class LogService {
     @Autowired
     private UserRepository userRepository;
 
-    public Log newUserAndLog (NewUserDto newUserDto) {
+    public Log newUserAndLog (NewUserDto newUserDto) throws InputMismatchException {
         // Nouvel utilisateur - vérifie qu'il n'existe pas déjà et qu'un mdp est renseigné
         List<Log> logConnections = logRepository.findByEmail(newUserDto.getEmail());
         if (logConnections.size() == 1) { //Utilisateur existe déjà

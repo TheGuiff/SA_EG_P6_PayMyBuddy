@@ -7,6 +7,7 @@ import com.paymybuddy.sa_eg_p6_paymybuddy.service.UserService;
 import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.ConnectionDto;
 import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.MovementDto;
 import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.TransactionWebDto;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -31,6 +33,7 @@ public class UserController {
 
     @GetMapping("/")
     public String index() {
+        log.info("Connection to the app");
         return "index";
     }
 
@@ -38,8 +41,9 @@ public class UserController {
     public String board(HttpServletRequest request, Model model) {
         //User connecté
         Principal principal = request.getUserPrincipal();
-        Log log = logRepository.findByEmail(principal.getName()).get(0);
-        model.addAttribute("log",log);
+        Log myLog = logRepository.findByEmail(principal.getName()).get(0);
+        model.addAttribute("log",myLog);
+        log.info("Go to board for : " + myLog.getEmail());
         //Nouvelle transaction
         TransactionWebDto transactionWebDto = new TransactionWebDto();
         model.addAttribute("transactionWebDto", transactionWebDto);
@@ -49,6 +53,7 @@ public class UserController {
     @GetMapping("/connection")
     public String connection(Model model) {
         //Nouvelle connexion
+        log.info("New connection");
         ConnectionDto connectionDto = new ConnectionDto();
         model.addAttribute("connectionDto", connectionDto);
         return "connection";
@@ -59,9 +64,14 @@ public class UserController {
                                     @ModelAttribute ConnectionDto connectionDto,
                                     Model model) throws Exception {
         Principal principal = request.getUserPrincipal();
-        Log log = logRepository.findByEmail(principal.getName()).get(0);
-        connectionDto.setUser(log.getUser());
-        userService.addConnection(connectionDto);
+        Log myLog = logRepository.findByEmail(principal.getName()).get(0);
+        connectionDto.setUser(myLog.getUser());
+        log.info("Save new connection between " + myLog.getEmail() + " and " + connectionDto.getEmailConnection() );
+        try {
+            userService.addConnection(connectionDto);
+        } catch (Exception e) {
+            log.error("Error : {}", e.getMessage());
+        }
         return new ModelAndView("redirect:/board");
     }
 

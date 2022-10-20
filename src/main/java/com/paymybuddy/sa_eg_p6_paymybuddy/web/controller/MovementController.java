@@ -7,6 +7,7 @@ import com.paymybuddy.sa_eg_p6_paymybuddy.service.MovementInternalService;
 import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.MovementDto;
 import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.NewUserDto;
 import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.TransactionWebDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @Controller
+@Slf4j
 public class MovementController {
 
     @Autowired
@@ -32,8 +34,9 @@ public class MovementController {
                         Model model) {
         //User connecté
         Principal principal = request.getUserPrincipal();
-        Log log = logRepository.findByEmail(principal.getName()).get(0);
-        model.addAttribute("log",log);
+        Log myLog = logRepository.findByEmail(principal.getName()).get(0);
+        model.addAttribute("log",myLog);
+        log.info("new movement for : "+ myLog.getEmail());
         //Nouveau mouvement
         MovementDto movementDto = new MovementDto();
         model.addAttribute("movementDto", movementDto);
@@ -44,10 +47,15 @@ public class MovementController {
     public ModelAndView newMovement(HttpServletRequest request,
                                  @ModelAttribute MovementDto movementDto,
                                     Model model) throws Exception {
+        log.info("Save new movement");
         Principal principal = request.getUserPrincipal();
-        Log log = logRepository.findByEmail(principal.getName()).get(0);
-        movementDto.setUser(log.getUser());
-        movementInternalService.newMovementInternalService(movementDto);
+        Log myLog = logRepository.findByEmail(principal.getName()).get(0);
+        movementDto.setUser(myLog.getUser());
+        try {
+            movementInternalService.newMovementInternalService(movementDto);
+        } catch (Exception e) {
+            log.error("Error:{}", e.getMessage());
+        }
         return new ModelAndView("redirect:/board");
     }
 }

@@ -1,9 +1,8 @@
 package com.paymybuddy.sa_eg_p6_paymybuddy.web.controller;
 
-import com.paymybuddy.sa_eg_p6_paymybuddy.dal.entity.Log;
-import com.paymybuddy.sa_eg_p6_paymybuddy.dal.repository.LogRepository;
 import com.paymybuddy.sa_eg_p6_paymybuddy.service.LogService;
 import com.paymybuddy.sa_eg_p6_paymybuddy.web.dto.NewUserDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.InputMismatchException;
+
 @Controller
+@Slf4j
 public class LogController {
 
     @Autowired
@@ -20,6 +22,7 @@ public class LogController {
 
     @GetMapping("/createUser")
     public String createUser(Model model) {
+        log.info("Create new user");
         NewUserDto newUserDto = new NewUserDto();
         model.addAttribute("newUserDto", newUserDto);
         return "saveUser";
@@ -27,7 +30,13 @@ public class LogController {
 
     @PostMapping("/saveUser")
     public ModelAndView saveUser(@ModelAttribute NewUserDto newUserDto) {
-        logService.newUserAndLog(newUserDto);
+        log.info("Save new user");
+        try {
+            logService.newUserAndLog(newUserDto);
+        } catch (InputMismatchException e) {
+            log.error("Error:{}", e.getMessage());
+        }
         return new ModelAndView("redirect:/");
     }
+
 }
