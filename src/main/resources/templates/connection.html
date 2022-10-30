@@ -10,9 +10,10 @@
 <form method="post" th:action="@{/newConnection}" th:object="${connectionDto}">
     <div>
         <label for="emailInput">Email du contact : </label>
-        <input type="text" th:field="*{emailConnection}" id="emailInput">
+        <input type="text" th:field="*{emailConnection}" id="emailInput" required>
     </div>
     <button type="submit">Créer</button>
+    <button type="reset">Réinitialiser</button>
 </form>
 
 </body>

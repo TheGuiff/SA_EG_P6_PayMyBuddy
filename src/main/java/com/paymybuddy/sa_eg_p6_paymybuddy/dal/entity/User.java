@@ -23,6 +23,9 @@ public class User {
     @Column(name="lastname")
     private String lastName;
 
+    @Column(name="email")
+    private String email;
+
     @Column(name="balance")
     private Double balance;
 

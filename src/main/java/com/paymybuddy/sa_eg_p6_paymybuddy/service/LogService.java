@@ -38,6 +38,7 @@ public class LogService {
             log.setMdp(newUserDto.getMdp());
             user.setFirstName(newUserDto.getFirstName());
             user.setLastName(newUserDto.getLastName());
+            user.setEmail(newUserDto.getEmail());
             user.setBalance(0.0);
             user = userRepository.save(user);
             log.setUser(user);

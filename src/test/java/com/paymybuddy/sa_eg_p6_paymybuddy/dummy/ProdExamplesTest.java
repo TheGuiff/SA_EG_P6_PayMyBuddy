@@ -52,6 +52,7 @@ public class ProdExamplesTest {
         user1.setFirstName(firstName1);
         user1.setLastName(lastName);
         user1.setBalance(balance);
+        user1.setEmail(email1);
         user1 = userRepository.save(user1);
         log1.setUser(user1);
         logRepository.hashPasswordAndSave(log1);
@@ -64,6 +65,7 @@ public class ProdExamplesTest {
         user2.setFirstName(firstName2);
         user2.setLastName(lastName);
         user2.setBalance(balance);
+        user2.setEmail(email2);
         user2 = userRepository.save(user2);
         log2.setUser(user2);
         logRepository.hashPasswordAndSave(log2);
