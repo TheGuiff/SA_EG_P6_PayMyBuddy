@@ -43,6 +43,7 @@ public class UserController {
         Principal principal = request.getUserPrincipal();
         Log myLog = logRepository.findByEmail(principal.getName()).get(0);
         model.addAttribute("log",myLog);
+        model.addAttribute("listC", myLog.getUser().getConnections());
         log.info("Go to board for : " + myLog.getEmail());
         //Nouvelle transaction
         TransactionWebDto transactionWebDto = new TransactionWebDto();

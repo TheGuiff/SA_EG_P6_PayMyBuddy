@@ -1,6 +1,7 @@
 package com.paymybuddy.sa_eg_p6_paymybuddy.web.controller;
 
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.entity.Log;
+import com.paymybuddy.sa_eg_p6_paymybuddy.dal.entity.User;
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.repository.LogRepository;
 import com.paymybuddy.sa_eg_p6_paymybuddy.service.TransactionInternalService;
 import com.paymybuddy.sa_eg_p6_paymybuddy.service.TransactionService;
@@ -37,7 +38,11 @@ public class TransactionController {
         transactionDto.setDescription(transactionWebDto.getDescription());
         transactionDto.setAmount(transactionWebDto.getAmount());
         transactionDto.setUserFrom(myLog.getUser());
-        transactionDto.setUserTo(logRepository.findByEmail(transactionWebDto.getMailTo()).get(0).getUser());
+        try {
+            transactionDto.setUserTo(logRepository.findByEmail(transactionWebDto.getMailTo()).get(0).getUser());
+        } catch (Exception e) {
+            log.error("Error : unknown email address");
+        }
         try {
             transactionInternalService.newTransactionInternalService(transactionDto);
         } catch (Exception e) {

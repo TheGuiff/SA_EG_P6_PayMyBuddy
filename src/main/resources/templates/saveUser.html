@@ -10,21 +10,22 @@
 <form method="post" th:action="@{/saveUser}" th:object="${newUserDto}">
     <div>
         <label for="firstnameInput">Prénom : </label>
-        <input type="text" th:field="*{firstName}" id="firstnameInput">
+        <input type="text" th:field="*{firstName}" id="firstnameInput" required>
     </div>
     <div>
         <label for="lastnameInput">Nom de famille : </label>
-        <input type="text" th:field="*{lastName}" id="lastnameInput">
+        <input type="text" th:field="*{lastName}" id="lastnameInput" required>
     </div>
     <div>
         <label for="emailInput">Adresse mail : </label>
-        <input type="text" th:field="*{email}" id="emailInput">
+        <input type="text" th:field="*{email}" id="emailInput" required>
     </div>
     <div>
         <label for="mdpInput">Mot de passe : </label>
-        <input type="text" th:field="*{mdp}" id="mdpInput">
+        <input type="text" th:field="*{mdp}" id="mdpInput" required>
     </div>
     <button type="submit">Créer</button>
+    <button type="reset">Réinitialiser</button>
 </form>
 
 </body>
