@@ -49,13 +49,10 @@
     <div>
         <label for="connectionInput">Destinataire : </label>
         <select input type="text" id="connectionInput" th:field="*{mailTo}" required>
-<!--            <option value="Adresse mail du destinataire : "></option>-->
             <option th:each="connection : ${listC}"
                     th:value="${connection.email}"
                     th:text="${connection.firstName}+' '+${connection.lastName}"></option>
         </select>
-<!--        <label for="connectionInput">Adresse mail du destinataire : </label>-->
-<!--        <input list="browser" th:field="*{mailTo}" id="connectionInput">-->
 
     </div>
     <button type="submit">Créer</button>

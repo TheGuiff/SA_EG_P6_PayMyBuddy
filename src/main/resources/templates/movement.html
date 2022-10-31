@@ -12,12 +12,12 @@
 <form method="post" th:action="@{/newMovement}" th:object="${movementDto}">
     <div>
         <label for="amountInput">Montant : </label>
-        <input type="number" th:field="*{amount}" id="amountInput" required>
+        <input type="number" th:field="*{amount}" id="amountInput" required min="1" max="1000">
     </div>
     <div>
-        <input type="radio" th:field="*{type}" id="debit" value="DEBIT">
+        <input type="radio" th:field="*{type}" id="debit" value="DEBIT" required>
         <label for="debit">DEBIT</label><br>
-        <input type="radio" th:field="*{type}" id="credit" value="CREDIT">
+        <input type="radio" th:field="*{type}" id="credit" value="CREDIT" required>
         <label for="credit">CREDIT</label><br>
     </div>
     <button type="submit">Créer</button>
