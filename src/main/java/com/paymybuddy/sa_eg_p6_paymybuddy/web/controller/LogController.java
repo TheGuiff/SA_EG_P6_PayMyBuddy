@@ -29,14 +29,16 @@ public class LogController {
     }
 
     @PostMapping("/saveUser")
-    public ModelAndView saveUser(@ModelAttribute NewUserDto newUserDto) {
+    public String saveUser(@ModelAttribute NewUserDto newUserDto, Model model) {
         log.info("Save new user");
         try {
             logService.newUserAndLog(newUserDto);
+            return "/";
         } catch (InputMismatchException e) {
             log.error("Error:{}", e.getMessage());
+            model.addAttribute("Error",e.getMessage());
+            return "saveUser";
         }
-        return new ModelAndView("redirect:/");
     }
 
 }

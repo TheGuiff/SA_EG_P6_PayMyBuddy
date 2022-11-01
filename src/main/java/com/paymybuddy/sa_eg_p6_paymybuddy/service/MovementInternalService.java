@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.InputMismatchException;
 
 @Service
 public class MovementInternalService {
@@ -18,7 +19,7 @@ public class MovementInternalService {
     UserService userService;
 
     @Transactional
-    public Movement newMovementInternalService (MovementDto movementDto) throws Exception {
+    public Movement newMovementInternalService (MovementDto movementDto) throws InputMismatchException {
         Movement movement = movementService.newMovementService(movementDto);
         User user = userService.addMovementToUser(movementDto.getUser(), movement);
         movement.setUser(user);

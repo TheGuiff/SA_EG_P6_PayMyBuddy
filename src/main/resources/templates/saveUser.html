@@ -7,6 +7,10 @@
 <body>
 <h1>Create user</h1>
 
+<div th:if="${Error}">
+    <h3 th:text="${Error}"></h3>
+</div>
+
 <form method="post" th:action="@{/saveUser}" th:object="${newUserDto}">
     <div>
         <label for="firstnameInput">Prénom : </label>
