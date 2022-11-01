@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,13 +22,13 @@ public class UserService {
     private LogRepository logRepository;
 
     @Transactional
-    public User addConnection (ConnectionDto connectionDto) {
+    public User addConnection (ConnectionDto connectionDto) throws InputMismatchException {
         List<Log> logConnection = logRepository.findByEmail(connectionDto.getEmailConnection());
         if (logConnection.size() == 1) {
             connectionDto.getUser().getConnections().add(logConnection.get(0).getUser());
             return userRepository.save(connectionDto.getUser());
         } else {
-            throw new NoSuchElementException("unknown email address");
+            throw new InputMismatchException("unknown email address");
         }
     }
 

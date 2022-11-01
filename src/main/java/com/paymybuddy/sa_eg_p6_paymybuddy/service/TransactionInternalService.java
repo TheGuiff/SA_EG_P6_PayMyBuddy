@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.InputMismatchException;
 
 @Service
 public class TransactionInternalService {
@@ -17,7 +18,7 @@ public class TransactionInternalService {
     UserService userService;
 
     @Transactional
-    public Transaction newTransactionInternalService (TransactionDto transactionDto) throws Exception {
+    public Transaction newTransactionInternalService (TransactionDto transactionDto) throws InputMismatchException {
         Transaction transaction = transactionService.newTransactionService(transactionDto);
         userService.addTransactionToUser(transactionDto.getUserFrom(), transactionDto.getUserTo(), transaction);
         return transaction;

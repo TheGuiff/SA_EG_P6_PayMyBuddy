@@ -7,6 +7,10 @@
 <body>
 <h1>Nouvelle connexion</h1>
 
+<div th:if="${Error}">
+    <h3 th:text="${Error}"></h3>
+</div>
+
 <form method="post" th:action="@{/newConnection}" th:object="${connectionDto}">
     <div>
         <label for="emailInput">Email du contact : </label>

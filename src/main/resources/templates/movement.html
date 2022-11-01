@@ -7,6 +7,10 @@
 <body>
 <h1>Mouvement</h1>
 
+<div th:if="${Error}">
+    <h3 th:text="${Error}"></h3>
+</div>
+
 <p>Solde : <span th:text="${log.user.balance}"></span></p>
 
 <form method="post" th:action="@{/newMovement}" th:object="${movementDto}">

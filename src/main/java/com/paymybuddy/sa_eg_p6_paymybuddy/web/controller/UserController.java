@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.InputMismatchException;
 import java.util.List;
 
 @Controller
@@ -61,7 +62,7 @@ public class UserController {
     }
 
     @PostMapping("/newConnection")
-    public ModelAndView newConnection(HttpServletRequest request,
+    public String newConnection(HttpServletRequest request,
                                     @ModelAttribute ConnectionDto connectionDto,
                                     Model model) throws Exception {
         Principal principal = request.getUserPrincipal();
@@ -70,10 +71,12 @@ public class UserController {
         log.info("Save new connection between " + myLog.getEmail() + " and " + connectionDto.getEmailConnection() );
         try {
             userService.addConnection(connectionDto);
-        } catch (Exception e) {
+            return "board";
+        } catch (InputMismatchException e) {
             log.error("Error : {}", e.getMessage());
+            model.addAttribute("Error", e.getMessage());
+            return "connection";
         }
-        return new ModelAndView("redirect:/board");
     }
 
 }

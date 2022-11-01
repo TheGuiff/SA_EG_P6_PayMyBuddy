@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.InputMismatchException;
 
 @Controller
 @Slf4j
@@ -46,15 +47,20 @@ public class MovementController {
     @PostMapping("/newMovement")
     public ModelAndView newMovement(HttpServletRequest request,
                                  @ModelAttribute MovementDto movementDto,
-                                    Model model) throws Exception {
+                                    Model model) {
         log.info("Save new movement");
         Principal principal = request.getUserPrincipal();
         Log myLog = logRepository.findByEmail(principal.getName()).get(0);
         movementDto.setUser(myLog.getUser());
         try {
             movementInternalService.newMovementInternalService(movementDto);
-        } catch (Exception e) {
+        } catch (InputMismatchException e) {
             log.error("Error:{}", e.getMessage());
+            model.addAttribute("Error",e.getMessage());
+            Principal p = request.getUserPrincipal();
+            Log myLogE = logRepository.findByEmail(p.getName()).get(0);
+            model.addAttribute("log",myLogE);
+            return new ModelAndView("/movement");
         }
         return new ModelAndView("redirect:/board");
     }

@@ -5,8 +5,11 @@
     <title>Tableau de bord</title>
 </head>
 <body>
-<h1>Tableau de bord <span th:text="${log.user.firstName}"></span>
-    <span th:text="${log.user.lastName}"></span></h1>
+<h1>Tableau de bord <span th:text="${log.user.firstName}"></span><span th:text="${log.user.lastName}"></span></h1>
+
+<div th:if="${Error}">
+    <h3 th:text="${Error}"></h3>
+</div>
 
 <p>Solde : <span th:text="${log.user.balance}"></span></p>
 
