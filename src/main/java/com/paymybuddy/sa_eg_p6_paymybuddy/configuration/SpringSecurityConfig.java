@@ -1,7 +1,5 @@
 package com.paymybuddy.sa_eg_p6_paymybuddy.configuration;
 
-import com.paymybuddy.sa_eg_p6_paymybuddy.security.CustomUserDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

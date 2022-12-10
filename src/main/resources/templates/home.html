@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Pay My Buddy</title>
+</head>
+<body>
+<div class="text-center">
+    <div class="bg-dark text-white">Pay My Buddy</div>
+</div>
+<div class="row justify-content-between">
+    <div class="col-2">
+        <div class="text-center bg-success text-white" style="height: 40px; width: 150px">
+            Pay My Buddy
+        </div>
+    </div>
+    <nav class="col-auto nav nav-pills">
+        <a class="nav-item active" th:href="@{/home}">
+            <button type="submit" class="text-decoration-none btn btn-primary">Home</button>
+        </a>
+        <a class="nav-item" th:href="@{/transfert}">
+            <button type="submit" class="text-decoration-none btn btn-link">Transfert</button>
+        </a>
+        <a class = "nav-item" th:href="@{/movement}">
+            <button type="submit" class="text-decoration-none btn btn-link">Movement</button>
+        </a>
+        <a class="nav-item" th:href="@{/connection}">
+            <button type="submit" class="text-decoration-none btn btn-link">Connections</button>
+        </a>
+        <form class="nav-item" method="post" th:action="@{/logout}">
+            <button type="submit" class="text-decoration-none btn btn-link btn-logout">Logout</button>
+        </form>
+    </nav>
+</div>
+<br>
+<div class="container">
+    <div>Last name : <span th:text="${log.user.lastName}"></span></div>
+    <div>First name : <span th:text="${log.user.firstName}"></span></div>
+    <div>Email : <span th:text="${log.user.email}"></span></div>
+    <div>Account balance : <span th:text="${log.user.balance}"></span></div>
+    <br>
+    <p>Connections</p>
+    <table class="table table-striped table-bordered text-center">
+        <thead>
+        <tr>
+            <th score="col" class="table-success">Nom</th>
+            <th score="col" class="table-success">Prénom</th>
+            <th score="col" class="table-success">Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="connection : ${log.user.connections}">
+            <td th:text="${connection.lastName}"></td>
+            <td th:text="${connection.firstName}"></td>
+            <td th:text="${connection.email}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -2,30 +2,59 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Pay My Buddy</title>
 </head>
 <body>
-<h1>Mouvement</h1>
-
-<div th:if="${Error}">
+<div class="text-center">
+    <div class="bg-dark text-white">Pay My Buddy</div>
+</div>
+<div class="row justify-content-between">
+    <div class="col-2">
+        <div class="text-center bg-success text-white" style="height: 40px; width: 150px">
+            Pay My Buddy
+        </div>
+    </div>
+    <nav class="col-auto nav nav-pills">
+        <a class="nav-item" th:href="@{/home}">
+            <button type="submit" class="text-decoration-none btn btn-link">Home</button>
+        </a>
+        <a class="nav-item" th:href="@{/transfert}">
+            <button type="submit" class="text-decoration-none btn btn-link">Transfert</button>
+        </a>
+        <a class = "nav-item active" th:href="@{/movement}">
+            <button type="submit" class="text-decoration-none btn btn-primary">Movement</button>
+        </a>
+        <a class="nav-item" th:href="@{/connection}">
+            <button type="submit" class="text-decoration-none btn btn-link">Connections</button>
+        </a>
+        <form class="nav-item" method="post" th:action="@{/logout}">
+            <button type="submit" class="text-decoration-none btn btn-link btn-logout">Logout</button>
+        </form>
+    </nav>
+</div>
+<div class="text-center border" th:if="${Error}">
+    <br>
     <h3 th:text="${Error}"></h3>
 </div>
-
-<p>Solde : <span th:text="${log.user.balance}"></span></p>
-
+<br>
+<div class="text-center">Amount balance : <span th:text="${log.user.balance}"></span></div>
+<br>
 <form method="post" th:action="@{/newMovement}" th:object="${movementDto}">
-    <div>
-        <label for="amountInput">Montant : </label>
-        <input type="number" th:field="*{amount}" id="amountInput" required min="1" max="1000">
+    <div class="text-center">
+        <input type="number" placeholder="Montant" th:field="*{amount}" id="amountInput" required min="1" max="1000">
     </div>
-    <div>
+    <br>
+    <div class = "text-center">
         <input type="radio" th:field="*{type}" id="debit" value="DEBIT" required>
         <label for="debit">DEBIT</label><br>
         <input type="radio" th:field="*{type}" id="credit" value="CREDIT" required>
         <label for="credit">CREDIT</label><br>
     </div>
-    <button type="submit">Créer</button>
-    <button type="reset">Réinitialiser</button>
+    <br>
+    <div class="text-center">
+        <button type="submit" class="text-decoration-none btn btn-success">Pay</button>
+    </div>
 </form>
 
 </body>

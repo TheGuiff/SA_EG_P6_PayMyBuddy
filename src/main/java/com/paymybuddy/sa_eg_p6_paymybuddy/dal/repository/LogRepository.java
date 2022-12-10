@@ -1,17 +1,11 @@
 package com.paymybuddy.sa_eg_p6_paymybuddy.dal.repository;
 
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.entity.Log;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.DatatypeConverter;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Repository

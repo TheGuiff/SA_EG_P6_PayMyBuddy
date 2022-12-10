@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Pay My Buddy</title>
+</head>
+<body>
+<div class="text-center">
+    <div class="bg-dark text-white">Pay My Buddy</div>
+</div>
+<div class="row justify-content-between">
+        <div class="col-2">
+            <div class="text-center bg-success text-white" style="height: 40px; width: 150px">
+                Pay My Buddy
+            </div>
+        </div>
+        <nav class="col-auto nav nav-pills">
+            <a class="nav-item" th:href="@{/home}">
+                <button type="submit" class="text-decoration-none btn btn-link">Home</button>
+            </a>
+            <a class="nav-item active" th:href="@{/transfert}">
+                <button type="submit" class="text-decoration-none btn btn-primary">Transfert</button>
+            </a>
+            <a class = "nav-item" th:href="@{/movement}">
+                <button type="submit" class="text-decoration-none btn btn-link">Movement</button>
+            </a>
+            <a class="nav-item" th:href="@{/connection}">
+                <button type="submit" class="text-decoration-none btn btn-link">Connections</button>
+            </a>
+            <form class="nav-item" method="post" th:action="@{/logout}">
+                <button type="submit" class="text-decoration-none btn btn-link btn-logout">Logout</button>
+            </form>
+        </nav>
+</div>
+<div class="text-center border" th:if="${Error}">
+    <br>
+    <h3 th:text="${Error}"></h3>
+</div>
+<br>
+<div class="container">
+    <div class="align-self-start">Amount balance : <span th:text="${log.user.balance}"></span></div>
+    <br>
+    <p class="align-self-start">Send Money</p>
+    <form method="post" th:action="@{/newTransaction}" th:object="${transactionWebDto}" class="row text-center">
+        <div class="col-sm-2">
+            <select input class="form-control" type="text" id="connectionInput" th:field="*{mailTo}" required>
+                <option value="">Select a connection</option>
+                <option th:each="connection : ${log.user.connections}"
+                    th:value="${connection.email}"
+                    th:text="${connection.firstName}+' '+${connection.lastName}"></option>
+            </select>
+        </div>
+        <div class="col">
+            <input class="form-control" type="text" placeholder="Description"
+                   th:field="*{description}" id="descriptionInput" maxlength="50" required>
+        </div>
+        <div class="col">
+            <input class="form-control" type="number" placeholder="Amount"
+                   th:field="*{amount}" id="amountInput" min="0" max="1000" required>
+        </div>
+        <div class="col">
+            <button type="submit" class="form-control text-decoration-none btn btn-success">Pay</button>
+        </div>
+    </form>
+    <br>
+</div>
+<br>
+<div class="container">
+    <p>My Transactions</p>
+    <table class="table table-striped table-bordered text-center">
+        <thead>
+            <tr>
+                <th score="col" class="table-success">Description</th>
+                <th score="col" class="table-success">Connection</th>
+                <th score="col" class="table-success">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="transaction : ${log.user.transactions}">
+                <td th:text="${transaction.description}"></td>
+                <td th:text="${transaction.userTo.firstName}"></td>
+                <td th:text="${transaction.amount}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

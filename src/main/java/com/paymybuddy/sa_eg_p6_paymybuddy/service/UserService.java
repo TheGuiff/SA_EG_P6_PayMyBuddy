@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class UserService {
@@ -45,8 +44,8 @@ public class UserService {
 
     @Transactional
     public User addTransactionToUser (User userFrom, User userTo, Transaction transaction) {
-        userFrom.setBalance(userFrom.getBalance()-transaction.getAmount());
-        userTo.setBalance(userTo.getBalance()+transaction.getAmount()-transaction.getCommission());
+        userFrom.setBalance(userFrom.getBalance()-transaction.getAmount()-transaction.getCommission());
+        userTo.setBalance(userTo.getBalance()+transaction.getAmount());
         userFrom.getTransactions().add(transaction);
         userRepository.save(userTo);
         return userRepository.save(userFrom);
