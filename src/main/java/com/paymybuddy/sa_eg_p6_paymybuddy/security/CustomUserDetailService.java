@@ -2,8 +2,6 @@ package com.paymybuddy.sa_eg_p6_paymybuddy.security;
 
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.entity.Log;
 import com.paymybuddy.sa_eg_p6_paymybuddy.dal.repository.LogRepository;
-import com.paymybuddy.sa_eg_p6_paymybuddy.dal.repository.UserRepository;
-import com.paymybuddy.sa_eg_p6_paymybuddy.security.MyLogPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
