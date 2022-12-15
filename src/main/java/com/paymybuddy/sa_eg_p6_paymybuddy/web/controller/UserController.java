@@ -71,6 +71,7 @@ public class UserController {
                                     Model model) throws Exception {
         Principal principal = request.getUserPrincipal();
         Log myLog = logRepository.findByEmail(principal.getName()).get(0);
+        model.addAttribute("log",myLog);
         connectionDto.setUser(myLog.getUser());
         log.info("Save new connection between " + myLog.getEmail() + " and " + connectionDto.getEmailConnection() );
         try {
